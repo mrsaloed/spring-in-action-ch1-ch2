@@ -14,13 +14,13 @@ import sia.tacocloud.TacoOrder;
 import javax.validation.Valid;
 
 import org.springframework.validation.Errors;
+import sia.tacocloud.TacoUDT;
 import sia.tacocloud.data.IngredientRepository;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 
 @Controller
@@ -38,7 +38,7 @@ public class DesignTacoController {
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+        ingredientRepo.findAll().forEach(ingredients::add);
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
@@ -69,7 +69,7 @@ public class DesignTacoController {
         if (errors.hasErrors()) {
             return "design";
         }
-        tacoOrder.addTaco(taco);
+        tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
         return "redirect:/orders/current";
     }
 

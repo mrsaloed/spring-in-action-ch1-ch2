@@ -1,6 +1,5 @@
 package sia.tacocloud.web;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +17,9 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
-    private OrderRepository orderRepo;
+    private final OrderRepository orderRepo;
 
-    public OrderController (OrderRepository orderRepo) {
+    public OrderController(OrderRepository orderRepo) {
         this.orderRepo = orderRepo;
     }
 
@@ -34,7 +33,7 @@ public class OrderController {
                                Errors errors,
                                SessionStatus sessionStatus) {
 
-        if(errors.hasErrors()) {
+        if (errors.hasErrors()) {
             return "orderForm";
         }
 
