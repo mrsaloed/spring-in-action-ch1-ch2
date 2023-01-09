@@ -2,7 +2,6 @@ package sia.tacocloud;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;

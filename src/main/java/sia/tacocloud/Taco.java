@@ -1,8 +1,6 @@
 package sia.tacocloud;
 
 import lombok.Data;
-import lombok.Generated;
-import sia.tacocloud.data.IngredientRef;
 
 import java.util.ArrayList;
 import java.util.Date;
