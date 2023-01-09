@@ -1,6 +1,5 @@
 package sia.tacocloud.web;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +30,15 @@ public class DesignTacoController {
     private final IngredientRepository ingredientRepo;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo) {
+    public DesignTacoController(
+            IngredientRepository ingredientRepo) {
         this.ingredientRepo = ingredientRepo;
     }
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepo.findAll().forEach(ingredients::add);
+        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
 
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
@@ -63,13 +63,16 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processTaco(@Valid Taco taco,
-                              Errors errors,
-                              @ModelAttribute TacoOrder tacoOrder) {
+    public String processTaco(
+            @Valid Taco taco, Errors errors,
+            @ModelAttribute TacoOrder tacoOrder) {
+
         if (errors.hasErrors()) {
             return "design";
         }
+
         tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
+
         return "redirect:/orders/current";
     }
 
@@ -80,4 +83,5 @@ public class DesignTacoController {
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
     }
+
 }
